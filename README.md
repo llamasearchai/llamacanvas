@@ -4,6 +4,8 @@ Advanced AI-driven multi-modal generation platform with Claude API integration
 
 [![PyPI version](https://badge.fury.io/py/llama-canvas.svg)](https://badge.fury.io/py/llama-canvas)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://llamasearchai.github.io/llamacanvas/)
+[![Python Versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)](https://pypi.org/project/llama-canvas/)
 
 ## Overview
 
@@ -86,6 +88,62 @@ styled = canvas.apply_style(image, "Van Gogh")
 styled.save("styled_landscape.png")
 ```
 
+## Architecture
+
+LlamaCanvas is built with a modular architecture that allows for flexibility and extensibility:
+
+### Core Components
+
+- **Canvas**: The central workspace where all operations take place
+- **Agents**: Specialized components that handle specific AI tasks
+- **Pipelines**: Chains of operations for complex workflows
+- **Storage**: Manages saved images, projects, and galleries
+
+```
+┌─────────────────────────┐
+│       Application       │
+│  (CLI, Web UI, API)     │
+└───────────┬─────────────┘
+            │
+┌───────────▼─────────────┐
+│         Canvas          │
+└───┬────────┬────────┬───┘
+    │        │        │
+┌───▼──┐ ┌───▼──┐ ┌───▼──┐
+│Agents│ │Images│ │Video │
+└──────┘ └──────┘ └──────┘
+```
+
+### Agent System
+
+LlamaCanvas uses a flexible agent system to integrate with various AI models:
+
+- **ClaudeAgent**: Handles Claude API integration for multimodal generation
+- **StableDiffusionAgent**: Works with Stable Diffusion models
+- **EnhancementAgent**: Specializes in image enhancement
+- **VideoAgent**: Handles video generation and processing
+
+Each agent implements a common interface but can have specialized parameters and capabilities.
+
+## Roadmap
+
+Our development roadmap for the coming months:
+
+- **Q2 2024**:
+  - Advanced style transfer algorithms
+  - Improved image enhancement with fine-tuning options
+  - Better integration with Claude 3 Opus for high-quality generations
+
+- **Q3 2024**:
+  - Video generation capabilities
+  - Animation tools and transitions
+  - Batch processing with advanced queuing
+
+- **Q4 2024**:
+  - Collaborative canvas features
+  - Project sharing and galleries
+  - Advanced pipeline designer in the UI
+
 ## Web UI
 
 LlamaCanvas includes a web UI built with FastAPI, allowing you to generate and manipulate images through a browser interface. To start the web UI:
@@ -118,11 +176,18 @@ export DEFAULT_CLAUDE_MODEL="claude-3-opus-20240229"
 
 ## Documentation
 
-For detailed documentation, see [LlamaCanvas Documentation](https://llamacanvas.ai/docs).
+For detailed documentation, see [LlamaCanvas Documentation](https://llamasearchai.github.io/llamacanvas/).
 
 ## Contributing
 
-Contributions are welcome! Please check out our [contributing guidelines](CONTRIBUTING.md).
+We welcome contributions! Please check out our [contributing guidelines](CONTRIBUTING.md).
+
+## Community
+
+Join our community channels to get help, share your creations, and connect with other users:
+
+- [Discord Server](https://discord.gg/llamacanvas)
+- [Twitter/X](https://twitter.com/llamacanvas)
 
 ## License
 
