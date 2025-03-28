@@ -1,8 +1,8 @@
 site_name: LlamaCanvas
 site_description: Advanced AI-driven multi-modal generation platform with Claude API integration
 site_url: https://llamacanvas.readthedocs.io/
-repo_url: https://github.com/llamasearch/llamacanvas
-repo_name: llamasearch/llamacanvas
+repo_url: https://github.com/llamasearchai/llamacanvas
+repo_name: llamasearchai/llamacanvas
 edit_uri: edit/main/docs/
 
 theme:
@@ -37,14 +37,11 @@ plugins:
             show_category_heading: true
             show_bases: true
             heading_level: 3
-  - git-revision-date-localized:
-      enable_creation_date: true
-      type: date
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/llamasearch
+      link: https://github.com/llamasearchai
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/llama-canvas/
 
