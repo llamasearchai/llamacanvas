@@ -1,0 +1,110 @@
+site_name: LlamaCanvas
+site_description: Advanced AI-driven multi-modal generation platform with Claude API integration
+site_url: https://llamacanvas.readthedocs.io/
+repo_url: https://github.com/llamasearch/llamacanvas
+repo_name: llamasearch/llamacanvas
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: blue
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_category_heading: true
+            show_bases: true
+            heading_level: 3
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: date
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/llamasearch
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/llama-canvas/
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - meta
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: user_guide/installation.md
+    - Quick Start: user_guide/quickstart.md
+    - Configuration: user_guide/configuration.md
+  - User Guide:
+    - Core Concepts: user_guide/core_concepts.md
+    - Image Generation: user_guide/image_generation.md
+    - Style Transfer: user_guide/style_transfer.md
+    - Image Enhancement: user_guide/image_enhancement.md
+    - Video Processing: user_guide/video_processing.md
+    - Web UI: user_guide/web_ui.md
+    - CLI: user_guide/cli.md
+  - API Reference:
+    - Canvas: api_reference/canvas.md
+    - Image: api_reference/image.md
+    - Video: api_reference/video.md
+    - Agent Manager: api_reference/agent_manager.md
+    - Utils: api_reference/utils.md
+    - API Server: api_reference/api.md
+  - Examples:
+    - Basic Usage: examples/basic_usage.md
+    - Style Transfer: examples/style_transfer.md
+    - Video Creation: examples/video_creation.md
+    - Multi-modal Generation: examples/multimodal_generation.md
+    - Advanced Pipelines: examples/advanced_pipelines.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md 
