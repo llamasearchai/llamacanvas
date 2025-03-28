@@ -31,76 +31,89 @@ class Canvas:
     
     def __init__(
         self, 
-        width: int = 512, 
-        height: int = 512, 
-        background_color: Tuple[int, int, int] = (255, 255, 255),
-        use_agents: bool = True
+        width: Optional[int] = None, 
+        height: Optional[int] = None,
+        name: str = "Untitled Canvas",
+        config: Optional[Dict] = None
     ):
         """
         Initialize a new Canvas.
         
         Args:
-            width: Canvas width in pixels
-            height: Canvas height in pixels
-            background_color: RGB color tuple for canvas background
-            use_agents: Whether to initialize and use the agent system
+            width: Width of the canvas in pixels
+            height: Height of the canvas in pixels
+            name: Name of the canvas
+            config: Optional configuration dictionary
         """
-        self.width = width
-        self.height = height
-        self.background_color = background_color
-        self.layers: List[Image] = []
+        self.config = config or {}
         
-        # Initialize with blank canvas
-        blank = np.ones((height, width, 3), dtype=np.uint8) * np.array(background_color, dtype=np.uint8)
-        self.base_image = Image(PILImage.fromarray(blank))
+        self.width = width or self.config.get("default_image_width", 512)
+        self.height = height or self.config.get("default_image_height", 512)
+        self.name = name
         
-        # Initialize agent manager if enabled
-        self.agents = None
-        if use_agents:
-            try:
-                from llama_canvas.core.agent_manager import AgentManager
-                self.agents = AgentManager(self)
-            except ImportError:
-                logger.warning("AgentManager not available, agents disabled")
+        self.layers = []
+        self.history = []
+        self._current_agent = None
+        self._temp_dir = None
         
-        logger.info(f"Canvas initialized with dimensions {width}x{height}")
+        logger.info(f"Created new canvas: {name} ({self.width}x{self.height})")
     
     def generate_from_text(
-        self, 
+        self,
         prompt: str,
-        model: str = "stable-diffusion-v2",
-        **kwargs
-    ) -> Image:
+        model: Optional[str] = None,
+        agent: str = "claude",
+        width: Optional[int] = None,
+        height: Optional[int] = None,
+        params: Optional[Dict] = None
+    ):
         """
-        Generate an image from text prompt and add it to the canvas.
+        Generate an image from a text prompt.
         
         Args:
-            prompt: Text description of the image to generate
-            model: Model to use for generation
-            **kwargs: Additional parameters for the generator
+            prompt: Text prompt describing the desired image
+            model: Model to use for generation (defaults to config default)
+            agent: Agent to use for generation (claude, stable_diffusion, etc.)
+            width: Width of the generated image
+            height: Height of the generated image
+            params: Additional parameters for the generation process
             
         Returns:
-            Generated image
+            Generated Image object
         """
-        logger.info(f"Generating image from text prompt using {model}")
+        # This is a placeholder for the actual implementation
+        from .image import Image
         
-        # If agents are enabled and model is not explicitly Claude, let the agent system handle it
-        if self.agents and not model.startswith("claude-"):
-            return self.agents.generate_image(prompt, model=model, **kwargs)
+        width = width or self.width
+        height = height or self.height
+        params = params or {}
         
-        # For demonstration purposes, create a simple gradient with text
-        logger.warning("No generator available, creating placeholder image")
+        # Record the operation in history
+        self._add_to_history("generate_from_text", {
+            "prompt": prompt,
+            "agent": agent,
+            "model": model,
+            "params": params
+        })
         
-        # Create a simple gradient background
-        gradient = np.zeros((self.height, self.width, 3), dtype=np.uint8)
-        for y in range(self.height):
-            color = [int(255 * y / self.height), 100, int(200 * (1 - y / self.height))]
-            gradient[y, :] = color
-            
-        image = Image(gradient)
+        # Create a blank image for demonstration
+        image = Image.create(width, height, "white")
         
-        self.layers.append(image)
         return image
+    
+    def _add_to_history(self, action: str, data: Dict) -> None:
+        """
+        Add an action to the history.
+        
+        Args:
+            action: Action name
+            data: Action data
+        """
+        self.history.append({
+            "action": action,
+            "timestamp": time.time(),
+            "data": data
+        })
     
     def apply_style(
         self,
