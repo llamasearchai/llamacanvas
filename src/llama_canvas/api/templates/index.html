@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LlamaCanvas Web UI</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        :root {
+            --primary-color: #6e4799;
+            --secondary-color: #f0c6ff;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #dee2e6;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], 
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #5a3b7d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1 class="logo">🦙 LlamaCanvas</h1>
+            <p>Advanced AI-driven multi-modal generation platform</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Generate Image from Text</h2>
+            <form id="generate-form">
+                <div class="form-group">
+                    <label for="prompt">Prompt</label>
+                    <textarea id="prompt" name="prompt" required placeholder="Describe the image you want to generate..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <select id="model" name="model">
+                        <option value="stable-diffusion-v2">Stable Diffusion v2</option>
+                        <option value="stable-diffusion-v1-5">Stable Diffusion v1.5</option>
+                        <option value="stable-diffusion-xl">Stable Diffusion XL</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <label for="width">Width</label>
+                            <input type="number" id="width" name="width" value="512" min="128" max="1024" step="64">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="height">Height</label>
+                            <input type="number" id="height" name="height" value="512" min="128" max="1024" step="64">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit">Generate</button>
+            </form>
+        </div>
+        
+        <div class="card" id="result-container" style="display: none;">
+            <h2 class="card-title">Generated Image</h2>
+            <div id="loading">Generating image...</div>
+            <img id="result-image" src="" alt="Generated image" style="max-width: 100%; display: none;">
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('generate-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            
+            // Show loading state
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result-image').style.display = 'none';
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = {
+                prompt: formData.get('prompt'),
+                model: formData.get('model'),
+                width: parseInt(formData.get('width')),
+                height: parseInt(formData.get('height'))
+            };
+            
+            try {
+                // Send request
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                // Display result
+                document.getElementById('result-image').src = `/api/image/${result.image_path.split('/').pop()}`;
+                document.getElementById('result-image').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                
+            } catch (error) {
+                alert(`Failed to generate image: ${error.message}`);
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 
