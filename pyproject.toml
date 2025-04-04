@@ -1,17 +1,17 @@
 [build-system]
-name = "hatchling"
+name = "hatchling-llamasearch"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "llama-canvas"
+name = "hatchling-llamasearch"
 version = "0.2.0"
 description = "Advanced AI-driven multi-modal generation platform with Claude API integration"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE"}
 authors = [
-    {name = "LlamaSearch.AI Team", email = "team@llamasearch.ai"},
+    {name = "hatchling-llamasearch", email = "nikjois@llamasearch.ai"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

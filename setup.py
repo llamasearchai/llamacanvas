@@ -19,14 +19,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="llama-canvas",
+    name="llama-canvas-llamasearch",
     version=version,
-    author="LlamaCanvas Team",
-    author_email="info@llamacanvas.ai",
+    author="LlamaSearch AI",
+    author_email="nikjois@llamasearch.ai",
     description="Advanced AI-driven multi-modal generation platform with Claude API integration",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/llamacanvas/llamacanvas",
+    url="https://llamasearch.ai",
     project_urls={
         "Bug Tracker": "https://github.com/llamacanvas/llamacanvas/issues",
         "Documentation": "https://llamacanvas.ai/docs",
