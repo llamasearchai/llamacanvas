@@ -118,7 +118,7 @@ export DEFAULT_CLAUDE_MODEL="claude-3-opus-20240229"
 
 ## Documentation
 
-For detailed documentation, see [LlamaCanvas Documentation](https://llamacanvas.ai/docs).
+For detailed documentation, see [LlamaCanvas Documentation](https://llamasearch.ai
 
 ## Contributing
 
