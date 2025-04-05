@@ -1,5 +1,4 @@
 [build-system]
-name = "hatchling-llamasearch"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
@@ -114,4 +113,7 @@ exclude_lines = [
     "if __name__ == .__main__.:",
     "pass",
     "raise ImportError",
-] 
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llamacanvas"] 
